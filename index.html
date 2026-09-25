@@ -26,6 +26,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -346,8 +347,8 @@
                             <option value="G12">G12</option>
                         </select></div>
                          <div class="form-group"><label for="dop"><span class="editable-heading" contenteditable="true" spellcheck="false">Inspection Details :</span></label><textarea rows="1" class="auto-resize" id="alpcmsid" name="alpcmsid"></textarea></div>
-                        <div class="form-group"><label for="lastCounselling"><span class="editable-heading" contenteditable="true" spellcheck="false">Other Details :</span></label><input type="text" id="lastCounselling" name="lastCounselling"></div>
-                        <div class="form-group"><label for="schedule"><span class="editable-heading" contenteditable="true" spellcheck="false">Other Details :</span></label><textarea rows="1" class="auto-resize" id="schedule" name="schedule"></textarea></div>
+                        <div class="form-group"><label for="lastCounselling"><span class="editable-heading" contenteditable="true" spellcheck="false">Kavach Status :</span></label><input type="text" id="lastCounselling" name="lastCounselling"></div>
+                        <div class="form-group"><label for="schedule"><span class="editable-heading" contenteditable="true" spellcheck="false">BPC Details :</span></label><textarea rows="1" class="auto-resize" id="schedule" name="schedule"></textarea></div>
                         <div class="form-group"><label for="inspectionDetails"><span class="editable-heading" contenteditable="true" spellcheck="false">Other Detail :</span></label><textarea rows="1" class="auto-resize" id="inspectionDetails" name="inspectionDetails"></textarea></div>
                     </div></div>
                 </div>
@@ -835,7 +836,7 @@
             document.querySelectorAll('#briefHistory textarea').forEach((ta,i)=>{if(ta.value.trim())rows.push([(i+1)+'. '+ta.value]);});
             rows.push([]);
             rows.push(['LP & TRAIN PARTICULARS']);
-            [['LP Name','lpName'],['DOP','dop'],['Train No','trainNo'],['BPC No','bpcno'],['Loco No','locono'],['Home Shed','shed'],['BPC %','bpc%'],['Grade','grade'],['Load','load'],['Group CLI Name','GCLI'],['BPC Date','bpcDate'],['Other Details','lastCounselling'],['Other Details','schedule'],['Other Detail','inspectionDetails']].forEach(([l,id])=>{const el=document.getElementById(id);if(el&&el.value)rows.push([l,el.value]);});
+            [['LP Name','lpName'],['DOP','dop'],['Train No','trainNo'],['BPC No','bpcno'],['Loco No','locono'],['Home Shed','shed'],['BPC %','bpc%'],['Grade','grade'],['Load','load'],['Group CLI Name','GCLI'],['BPC Date','bpcDate'],['Kavach Status','lastCounselling'],['BPC Details','schedule'],['Other Detail','inspectionDetails']].forEach(([l,id])=>{const el=document.getElementById(id);if(el&&el.value)rows.push([l,el.value]);});
             rows.push([]);
             rows.push(['LOG BOOK REMARKS']);
             document.querySelectorAll('#logBookRemarks textarea').forEach((ta,i)=>{if(ta.value.trim())rows.push([(i+1)+'. '+ta.value]);});
@@ -989,7 +990,27 @@
                 pdf.text('Page ' + pg + ' of ' + totalPages, pdfW - margin, pdfH - 4, { align: 'right' });
             }
 
-            pdf.save('Loco_Trouble_Report_' + new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5) + '.pdf');
+            (function() {
+                function sanitize(str) {
+                    return (str || '').toString().trim().replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, '_');
+                }
+                const reportDateVal = document.getElementById('reportDate') ? document.getElementById('reportDate').value : '';
+                let dateStr = 'NoDate';
+                if (reportDateVal) {
+                    const d = new Date(reportDateVal + 'T00:00:00');
+                    const dd = String(d.getDate()).padStart(2, '0');
+                    const mm = String(d.getMonth() + 1).padStart(2, '0');
+                    const yyyy = d.getFullYear();
+                    dateStr = dd + '-' + mm + '-' + yyyy;
+                }
+                const locoField = document.getElementById('alpnamehq');
+                const locoVal = locoField ? sanitize(locoField.value) : '';
+                const locoStr = locoVal || 'NoLocoNo';
+                const cliField = document.getElementById('cliName');
+                const cliVal = cliField ? sanitize(cliField.value) : '';
+                const cliStr = cliVal || 'NoCLI';
+                pdf.save('Kavach_Testing_Report_' + dateStr + '_' + locoStr + '_' + cliStr + '.pdf');
+            })();
 
             content.classList.remove('pdf-mode');
             buttons.forEach(btn => btn.style.display = '');
