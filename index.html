@@ -27,6 +27,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,37 +40,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; min-height: 100vh; color: #000; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #cfe3f5; padding: 20px; min-height: 100vh; color: #000; }
         .page-nav { max-width: 1000px; margin: 0 auto 10px auto; display: flex; gap: 6px; }
         .page-nav-btn { padding: 10px 28px; border: none; border-radius: 8px 8px 0 0; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.25s, color 0.25s; background: rgba(255,255,255,0.25); color: #fff; }
-        .page-nav-btn.active { background: #fff; color: #003366; }
-        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px 40px; border-radius: 0 10px 10px 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .page-nav-btn.active { background: #fff; color: #0b2e4f; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 26px 40px 34px; border-radius: 4px; box-shadow: 0 20px 60px rgba(0,0,0,0.35); }
         .page { display: none; }
         .page.active { display: block; }
-        .header { text-align: center; margin-bottom: 22px; background: transparent; border-radius: 8px 8px 0 0; border-bottom: 4px solid #FFD700; padding: 0; overflow: hidden; position: relative; }
-        .header-inner { display: flex; align-items: center; min-height: 90px; position: relative; }
-        .header-logo-box { background: transparent; width: 100px; min-width: 100px; display: flex; align-items: center; justify-content: center; padding: 6px 8px; flex-shrink: 0; border-right: none; }
-        .header-logo-box img { display: block; width: 82px; height: 82px; object-fit: contain; }
+        .header { text-align: center; margin: -26px -40px 22px; background: linear-gradient(180deg, #0e3155 0%, #0b2545 100%); border-radius: 4px 4px 0 0; border-bottom: 3px solid #c9a227; padding: 0; overflow: hidden; position: relative; }
+        .header-inner { display: flex; align-items: center; min-height: 96px; position: relative; }
+        .header-logo-box { background: rgba(255,255,255,0.06); width: 104px; min-width: 104px; display: flex; align-items: center; justify-content: center; padding: 6px 8px; flex-shrink: 0; border-right: 1px solid rgba(201,162,39,0.35); }
+        .header-logo-box img { display: block; width: 78px; height: 78px; object-fit: contain; }
         .header-text { position: absolute; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; pointer-events: none; }
-        .header h1 { color: #000000; font-size: 26px; font-weight: bold; padding: 14px 20px 4px 20px; margin: 0; text-align: center; }
+        .header h1 { color: #ffffff; font-size: 24px; font-weight: 700; padding: 14px 20px 2px 20px; margin: 0; text-align: center; letter-spacing: 0.3px; }
         .editable-heading { cursor: text; border-radius: 4px; outline: none; transition: box-shadow 0.2s, background 0.2s; }
-        .editable-heading:hover { box-shadow: 0 0 0 1.5px #99b3d6; background: rgba(0,51,102,0.05); }
-        .editable-heading:focus { box-shadow: 0 0 0 2px #003366; background: rgba(0,51,102,0.08); }
+        .editable-heading:hover { box-shadow: 0 0 0 1.5px #c9a227; background: rgba(201,162,39,0.08); }
+        .editable-heading:focus { box-shadow: 0 0 0 2px #c9a227; background: rgba(201,162,39,0.12); }
         .pdf-mode .editable-heading:hover, .pdf-mode .editable-heading:focus { box-shadow: none; background: transparent; }
-        .header .raipur-div-badge { display: block; background: transparent; color: #000000; font-size: 17px; font-weight: 800; padding: 7px 20px 11px 20px; letter-spacing: 3px; text-transform: uppercase; margin: 0; text-align: center; }
-        .section { margin-bottom: 8px; padding: 0; background: #f8f9fa; border-radius: 8px; overflow: hidden; border: 2px solid #003366; }
-        .section.case-details { background: transparent; border-radius: 8px; margin-bottom: 8px; border: 2px solid #003366; }
-        .section-title { font-size: 14px; font-weight: bold; color: #003366; background: #808080; padding: 5px 10px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px 8px 0 0; }
+        .header .raipur-div-badge { display: block; background: transparent; color: #e8c968; font-size: 15px; font-weight: 700; padding: 5px 20px 13px 20px; letter-spacing: 3px; text-transform: uppercase; margin: 0; text-align: center; }
+        .section { margin-bottom: 8px; padding: 0; background: #f8f9fa; border-radius: 8px; overflow: hidden; border: 2px solid #0b2e4f; }
+        .section.case-details { background: transparent; border-radius: 8px; margin-bottom: 8px; border: 2px solid #0b2e4f; }
+        .section-title { font-size: 13px; font-weight: 700; color: #0b2e4f; background: linear-gradient(180deg, #f3e6bf 0%, #ecd9a0 100%); padding: 6px 12px; text-transform: uppercase; letter-spacing: 0.6px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px 8px 0 0; border-bottom: 2px solid #c9a227; }
         .section-body { padding: 6px 10px 8px 10px; }
         .button-group { display: flex; gap: 8px; }
-        .add-line-btn { background: #003366; color: white; border: none; width: 26px; height: 26px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; line-height: 1; }
-        .add-line-btn:hover { background: #0055aa; }
+        .add-line-btn { background: #0b2e4f; color: white; border: none; width: 26px; height: 26px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; line-height: 1; }
+        .add-line-btn:hover { background: #15578c; }
         .line-remove-btn { background: #dc3545; color: white; border: none; width: 22px; height: 22px; border-radius: 50%; font-size: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-left: 6px; margin-top: 3px; transition: background 0.3s; line-height: 1; }
         .line-remove-btn:hover { background: #c82333; }
         .form-group { margin-bottom: 4px; }
         label { display: flex; font-weight: 500; color: #000; margin-bottom: 2px; font-size: 13px; }
-        input[type="text"], input[type="date"], select, textarea { width: 100%; padding: 2px 5px; border: 2px solid #e0e0e0; border-radius: 5px; font-size: 14px; transition: border-color 0.3s; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #FFFEF0; height: 30px; color: #000; }
-        input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus { outline: none; border-color: #003366; }
+        input[type="text"], input[type="date"], select, textarea { width: 100%; padding: 2px 5px; border: 2px solid #e0e0e0; border-radius: 5px; font-size: 14px; transition: border-color 0.3s; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #fbf8ee; height: 30px; color: #000; }
+        input[type="text"]:focus, input[type="date"]:focus, select:focus, textarea:focus { outline: none; border-color: #0b2e4f; }
         .pdf-mode input[type="text"], .pdf-mode input[type="date"], .pdf-mode select, .pdf-mode textarea { background-color: transparent !important; border: none !important; border-radius: 0 !important; }
         textarea.auto-resize { resize: none; overflow: hidden; height: 24px; min-height: 24px; line-height: 1.4; padding: 3px 5px; display: block; word-break: break-all; overflow-wrap: break-word; white-space: pre-wrap; }
         .textarea-mirror { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 13px; line-height: 1.4; padding: 3px 5px; width: 100%; min-height: 24px; word-break: break-all; overflow-wrap: break-word; white-space: pre-wrap; display: block; color: #000; }
@@ -79,23 +80,23 @@
         .line-input { flex: 1; }
         .expandable-container { margin-top: 4px; }
         .lp-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; margin-top: 4px; }
-        .lp-grid .form-group { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 6px; border: 1.5px solid #003366; border-radius: 5px; padding: 3px 6px; background: #eef3fa; }
+        .lp-grid .form-group { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: 6px; border: 1.5px solid #0b2e4f; border-radius: 5px; padding: 3px 6px; background: #eef2f7; }
         .lp-grid .form-group label { margin-bottom: 0; text-align: right; }
         .lp-grid input[type="date"], .lp-grid select { height: 28px; }
         .signature-section { margin-top: 30px; display: flex; justify-content: flex-end; align-items: flex-start; gap: 20px; }
         .signature-box { text-align: center; }
-        .signature-upload { display: inline-block; padding: 8px 18px; background: #003366; color: white; border-radius: 5px; cursor: pointer; font-size: 13px; transition: background 0.3s; }
-        .signature-upload:hover { background: #0055aa; }
+        .signature-upload { display: inline-block; padding: 8px 18px; background: #0b2e4f; color: white; border-radius: 5px; cursor: pointer; font-size: 13px; transition: background 0.3s; }
+        .signature-upload:hover { background: #15578c; }
         .signature-upload input[type="file"] { display: none; }
         .signature-preview { margin-top: 8px; max-width: 200px; max-height: 100px; border: 2px dashed #e0e0e0; padding: 8px; border-radius: 5px; }
         .signature-preview img { max-width: 100%; max-height: 80px; }
         .cli-name-input { margin-top: 8px; width: 300px; height: 50px; font-size: 17px; font-weight: 600; padding: 10px 14px; letter-spacing: 0.4px; }
-        .submit-btn, .draft-btn { flex: 1; min-width: 130px; padding: 5px 12px; background: #003366; color: white; border: none; border-radius: 7px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease; display: flex; align-items: center; justify-content: center; gap: 5px; position: relative; overflow: hidden; box-shadow: 0 3px 0 rgba(0,0,0,0.22), 0 4px 10px rgba(0,0,0,0.25); }
+        .submit-btn, .draft-btn { flex: 1; min-width: 130px; padding: 5px 12px; background: #0b2e4f; color: white; border: none; border-radius: 7px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease; display: flex; align-items: center; justify-content: center; gap: 5px; position: relative; overflow: hidden; box-shadow: 0 3px 0 rgba(0,0,0,0.22), 0 4px 10px rgba(0,0,0,0.25); }
         .submit-btn::after, .draft-btn::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 50%; background: linear-gradient(to bottom, rgba(255,255,255,0.35), rgba(255,255,255,0)); pointer-events: none; border-radius: 8px 8px 0 0; }
         .submit-btn:hover, .draft-btn:hover { transform: translateY(-2px); filter: brightness(1.06); box-shadow: 0 5px 0 rgba(0,0,0,0.22), 0 8px 14px rgba(0,0,0,0.3); }
         .submit-btn:active, .draft-btn:active { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.25); }
         .submit-btn:disabled, .draft-btn:disabled { cursor: not-allowed; filter: grayscale(0.15) brightness(0.9); transform: none; }
-        .submit-btn:hover { background: #0055aa; }
+        .submit-btn:hover { background: #15578c; }
         .action-buttons { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
         .draft-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
         .draft-btn.download { background: #10b981; color: white; }
@@ -125,7 +126,7 @@
         .draft-status.error { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
         .draft-status.show { display: block; }
         /* Auto-save indicator */
-        .autosave-bar { display: flex; align-items: center; gap: 10px; padding: 7px 14px; border-radius: 7px; margin-bottom: 10px; background: #eef3fa; border: 1.5px solid #003366; font-size: 12px; font-weight: 600; color: #003366; }
+        .autosave-bar { display: flex; align-items: center; gap: 10px; padding: 7px 14px; border-radius: 7px; margin-bottom: 10px; background: #eef2f7; border: 1.5px solid #0b2e4f; font-size: 12px; font-weight: 600; color: #0b2e4f; }
         .autosave-dot { width: 10px; height: 10px; border-radius: 50%; background: #ccc; flex-shrink: 0; transition: background 0.3s; }
         .autosave-dot.saving { background: #f59e0b; animation: pulse-dot 0.8s infinite; }
         .autosave-dot.saved { background: #10b981; }
@@ -135,35 +136,35 @@
         .autosave-clear-btn { background: none; border: 1.5px solid #dc3545; color: #dc3545; border-radius: 5px; padding: 2px 10px; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; }
         .autosave-clear-btn:hover { background: #dc3545; color: white; }
         input[type="file"].hidden-file-input { display: none; }
-        .photo-page-header { text-align: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 3px solid #003366; }
-        .photo-page-header h2 { color: #003366; font-size: 22px; }
+        .photo-page-header { text-align: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 3px solid #0b2e4f; }
+        .photo-page-header h2 { color: #0b2e4f; font-size: 22px; }
         .photo-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 0; }
-        .photo-tab-btn { padding: 5px 12px; border: 2px solid #003366; border-bottom: none; border-radius: 6px 6px 0 0; background: #e2e2e2; color: #003366; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; }
-        .photo-tab-btn.active { background: #003366; color: #fff; }
+        .photo-tab-btn { padding: 5px 12px; border: 2px solid #0b2e4f; border-bottom: none; border-radius: 6px 6px 0 0; background: #e2e2e2; color: #0b2e4f; font-size: 11px; font-weight: 700; cursor: pointer; transition: background 0.2s, color 0.2s; }
+        .photo-tab-btn.active { background: #0b2e4f; color: #fff; }
         .photo-tab-btn:hover:not(.active) { background: #c8c8c8; }
-        .photo-tab-content { border: 2px solid #003366; border-radius: 0 8px 8px 8px; padding: 16px; background: #f8f9fa; min-height: 260px; }
+        .photo-tab-content { border: 2px solid #0b2e4f; border-radius: 0 8px 8px 8px; padding: 16px; background: #f8f9fa; min-height: 260px; }
         .photo-panel { display: none; }
         .photo-panel.active { display: block; }
-        .photo-panel-title { font-size: 14px; font-weight: bold; color: #003366; background: #e2e2e2; padding: 5px 10px; border-radius: 5px; margin-bottom: 12px; letter-spacing: 0.4px; text-transform: uppercase; }
+        .photo-panel-title { font-size: 14px; font-weight: bold; color: #0b2e4f; background: #e2e2e2; padding: 5px 10px; border-radius: 5px; margin-bottom: 12px; letter-spacing: 0.4px; text-transform: uppercase; }
         .photo-upload-zone { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-        .photo-upload-label { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #003366; color: white; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: background 0.3s; white-space: nowrap; }
-        .photo-upload-label:hover { background: #0055aa; }
+        .photo-upload-label { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; background: #0b2e4f; color: white; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: background 0.3s; white-space: nowrap; }
+        .photo-upload-label:hover { background: #15578c; }
         .photo-upload-label input[type="file"] { display: none; }
         .photo-upload-hint { font-size: 12px; color: #777; }
         .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .photo-item { position: relative; border: 3px solid #FFD700; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(255,215,0,0.3); }
+        .photo-item { position: relative; border: 3px solid #c9a227; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(255,215,0,0.3); }
         .photo-item .photo-img-wrap { width: 100%; height: 180px; background: #f4f4f4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .photo-item img { width: 100%; height: 180px; object-fit: contain; display: block; background: #f4f4f4; }
         .photo-item-label { background: rgba(0,51,102,0.82); color: #fff; font-size: 11px; padding: 3px 8px; position: absolute; bottom: 0; left: 0; right: 0; text-align: center; }
-        .photo-description { width: 100%; padding: 8px 10px; border: none; border-top: 2px solid #003366; font-size: 13px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; resize: vertical; min-height: 52px; background-color: #FFFEF0; color: #000; font-weight: 500; }
-        .photo-description:focus { outline: none; background-color: #fff; border-top-color: #FFD700; }
+        .photo-description { width: 100%; padding: 8px 10px; border: none; border-top: 2px solid #0b2e4f; font-size: 13px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; resize: vertical; min-height: 52px; background-color: #fbf8ee; color: #000; font-weight: 500; }
+        .photo-description:focus { outline: none; background-color: #fff; border-top-color: #c9a227; }
         .photo-description::placeholder { color: #aaa; font-weight: 400; font-style: italic; }
         /* Photo fullscreen overlay */
-        .photo-fullscreen { display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); z-index:9999; overflow-y:auto; padding:20px; }
+        .photo-fullscreen { display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:#cfe3f5; z-index:9999; overflow-y:auto; padding:20px; }
         .photo-fullscreen.open { display:block; }
         .photo-fs-inner { max-width:1000px; margin:0 auto; background:white; border-radius:10px; padding:24px 32px; box-shadow:0 10px 40px rgba(0,0,0,0.3); }
-        .photo-fs-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:14px; border-bottom:3px solid #003366; }
-        .photo-fs-title { color:#003366; font-size:22px; font-weight:bold; }
+        .photo-fs-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:14px; border-bottom:3px solid #0b2e4f; }
+        .photo-fs-title { color:#0b2e4f; font-size:22px; font-weight:bold; }
         .photo-fs-close { background:#dc3545; color:white; border:none; border-radius:8px; padding:8px 20px; font-size:14px; font-weight:700; cursor:pointer; transition:background 0.2s; }
         .photo-fs-close:hover { background:#c82333; }
         .photo-remove-btn { position: absolute; top: 5px; right: 5px; background: rgba(220,53,69,0.9); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
@@ -173,9 +174,9 @@
         .pdf-mode * { font-weight: normal !important; }
         .pdf-mode .case-details-textarea,
         .pdf-mode .textarea-mirror.case-details-textarea { font-weight: bold !important; }
-        .pdf-mode .section-title { background: #003366 !important; color: #ffffff !important; text-decoration: none !important; border: none !important; padding: 3px 8px !important; font-size: 12px !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .pdf-mode .section-title { background: transparent !important; color: #0b2e4f !important; text-decoration: none !important; border: none !important; padding: 3px 8px !important; font-size: 12px !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
         .pdf-mode .section, .pdf-mode .section.case-details {
-            border: 1.2px solid #003366 !important;
+            border: 1.2px solid #0b2e4f !important;
             background: transparent !important;
             border-radius: 4px !important;
             margin-bottom: 4px !important;
@@ -187,6 +188,15 @@
         .pdf-mode input[type="text"], .pdf-mode input[type="date"] { background: transparent !important; border: none !important; border-radius: 0 !important; outline: none !important; box-shadow: none !important; }
         .pdf-mode #reportDateRow > div { background: transparent !important; border: none !important; }
         .pdf-mode .header-logo-box { background: transparent !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .pdf-mode .header {
+            background: #ffffff !important;
+            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
+        .pdf-mode .header h1,
+        .pdf-mode .header .raipur-div-badge {
+            color: #0b2e4f !important;
+            -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        }
         .pdf-mode .no-pdf { display: none !important; }
 
         /* ── Compact tabular look for numbered line sections in PDF ── */
@@ -200,7 +210,7 @@
         }
         .pdf-mode .expandable-line:last-child { border-bottom: none !important; }
         .pdf-mode .line-number {
-            border-right: 1px solid #003366 !important;
+            border-right: 1px solid #0b2e4f !important;
             padding: 1px 6px 1px 2px !important;
             margin-right: 6px !important;
             min-width: 20px !important;
@@ -217,16 +227,17 @@
             body { background: white !important; padding: 0 !important; margin: 0 !important; }
             .page-nav { display: none !important; }
             .container { box-shadow: none !important; padding: 15px !important; border-radius: 0 !important; max-width: 100% !important; }
+            .header { margin: -15px -15px 15px !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .page { display: block !important; }
             .submit-btn, .signature-upload, .add-line-btn, .line-remove-btn, .photo-upload-zone, .photo-remove-btn, #textFormatToolbar, .no-pdf { display: none !important; }
             input[type="text"], input[type="date"], select { border: none !important; background: transparent !important; height: auto !important; }
             textarea { border: none !important; background: transparent !important; height: auto !important; }
             .photo-panel { display: block !important; }
             .photo-tab-btn { display: none !important; }
-            .section-title { background: #003366 !important; color: #ffffff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .section-title { background: #0b2e4f !important; color: #ffffff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             #photoPage { page-break-before: always; }
         }
-        .text-format-toolbar { position: absolute; background: #003366; border-radius: 6px; padding: 8px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1000; gap: 6px; }
+        .text-format-toolbar { position: absolute; background: #0b2e4f; border-radius: 6px; padding: 8px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1000; gap: 6px; }
         .text-format-toolbar.active { display: flex; }
         .format-btn { background: white; border: none; border-radius: 4px; padding: 6px 10px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; min-width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; }
         .format-btn:hover { background: #e0e0e0; transform: scale(1.05); }
@@ -235,13 +246,13 @@
 
         /* ── LP & Train: preserve borders in PDF mode ── */
         .pdf-mode #sectionLPTrain {
-            border: 1.2px solid #003366 !important;
+            border: 1.2px solid #0b2e4f !important;
             background: transparent !important;
             border-radius: 4px !important;
         }
         .pdf-mode #sectionLPTrain .section-title {
-            background: #003366 !important;
-            color: #ffffff !important;
+            background: transparent !important;
+            color: #0b2e4f !important;
             text-decoration: none !important;
             padding: 3px 8px !important;
             font-size: 12px !important;
@@ -251,7 +262,7 @@
             gap: 0 !important;
         }
         .pdf-mode #sectionLPTrain .lp-grid .form-group {
-            border: 0.75px solid #003366 !important;
+            border: 0.75px solid #0b2e4f !important;
             border-radius: 0 !important;
             padding: 1px 5px !important;
             background: transparent !important;
@@ -273,13 +284,13 @@
         }
         @media (max-width: 768px) { .lp-grid { grid-template-columns: 1fr; } .photo-grid { grid-template-columns: 1fr; } .container { padding: 20px; } }
         /* ── Voice Typing ── */
-        .voice-bar { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:14px; background:#eef3fa; border:2px solid #003366; border-radius:8px; padding:8px 16px; flex-wrap:wrap; }
-        .voice-bar span.vlabel { font-weight:600; color:#003366; font-size:13px; }
+        .voice-bar { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:14px; background:#eef2f7; border:2px solid #0b2e4f; border-radius:8px; padding:8px 16px; flex-wrap:wrap; }
+        .voice-bar span.vlabel { font-weight:600; color:#0b2e4f; font-size:13px; }
         .voice-switch { position:relative; display:inline-block; width:46px; height:26px; }
         .voice-switch input { opacity:0; width:0; height:0; }
         .voice-slider { position:absolute; cursor:pointer; inset:0; background:#ccc; border-radius:26px; transition:.3s; }
         .voice-slider:before { content:""; position:absolute; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:.3s; }
-        input:checked + .voice-slider { background:#003366; }
+        input:checked + .voice-slider { background:#0b2e4f; }
         input:checked + .voice-slider:before { transform:translateX(20px); }
         .voice-status { font-weight:700; font-size:13px; color:#888; min-width:30px; }
         .voice-status.voice-active { color:#00a040; }
@@ -375,12 +386,12 @@
                 </div>
                 <div id="authSection">
                 <div class="signature-section" id="signatureSection">
-                    <label style="font-weight:600;color:#003366;margin-bottom:0;">Report Prepared By:</label>
+                    <label style="font-weight:600;color:#0b2e4f;margin-bottom:0;">Report Prepared By:</label>
                     <div class="signature-box">
                         <label class="signature-upload">Upload Signature<input type="file" id="signatureFile" accept="image/*" onchange="previewSignature(event)"></label>
                         <div class="signature-preview" id="signaturePreview" style="display:none;"><img id="signatureImage" src="" alt="Signature"></div>
                         <div class="form-group" style="margin-top:8px;">
-                            <label class="no-pdf" style="font-size:12px;color:#003366;font-weight:600;margin-bottom:3px;display:block;">CLI NAME</label>
+                            <label class="no-pdf" style="font-size:12px;color:#0b2e4f;font-weight:600;margin-bottom:3px;display:block;">CLI NAME</label>
                             <input list="cliNameOptions" type="text" class="cli-name-input" id="cliName" name="cliName" placeholder="Select or type CLI NAME" style="width:300px;height:42px;font-size:15px;font-weight:600;">
                             <datalist id="cliNameOptions">
                                 <option value="A K REDDY/CLI/R">
@@ -489,9 +500,9 @@
                 </div>
 
                 <div id="reportDateRow" class="report-date-row" style="display:flex;justify-content:flex-start;margin-top:6px;margin-bottom:6px;">
-                    <div style="background:#eef3fa;border:2px solid #003399;border-radius:8px;padding:6px 14px;display:flex;align-items:center;gap:10px;">
-                        <label for="reportDate" style="font-weight:700;color:#003399;font-size:13px;white-space:nowrap;margin:0;">📅 DATE:</label>
-                        <input type="date" id="reportDate" name="reportDate" style="height:30px;font-size:13px;font-weight:600;border:2px solid #003399;border-radius:5px;padding:2px 8px;background:#FFFEF0;color:#000;width:145px;">
+                    <div style="background:#eef2f7;border:2px solid #0b2e4f;border-radius:8px;padding:6px 14px;display:flex;align-items:center;gap:10px;">
+                        <label for="reportDate" style="font-weight:700;color:#0b2e4f;font-size:13px;white-space:nowrap;margin:0;">📅 DATE:</label>
+                        <input type="date" id="reportDate" name="reportDate" style="height:30px;font-size:13px;font-weight:600;border:2px solid #0b2e4f;border-radius:5px;padding:2px 8px;background:#fbf8ee;color:#000;width:145px;">
                     </div>
                 </div>
                 </div>
@@ -500,7 +511,7 @@
                 <div class="autosave-bar no-pdf" id="autosaveBar">
                     <div class="autosave-dot" id="autosaveDot"></div>
                     <span class="autosave-label" id="autosaveLabel">Auto-save ready</span>
-                    <button class="autosave-clear-btn" onclick="clearAutoSaveDraft()" title="Clear saved draft from browser">🗑 Clear Draft</button>
+                    <button type="button" class="autosave-clear-btn" onclick="clearAutoSaveDraft()" title="Clear saved draft from browser">🗑 Clear Draft</button>
                 </div>
                 <div id="draftStatus" class="draft-status"></div>
                 <div id="sheetStatus" class="draft-status" style="margin-bottom:8px;"></div>
@@ -964,7 +975,7 @@
                         displayVal = d.toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'});
                     }
                     span = document.createElement('span');
-                    span.style.cssText = 'font-size:14px;font-weight:700;color:#003399;padding:2px 8px;display:inline-flex;align-items:center;';
+                    span.style.cssText = 'font-size:14px;font-weight:700;color:#0b2e4f;padding:2px 8px;display:inline-flex;align-items:center;';
                     span.textContent = displayVal || 'NOT SET';
                     dateInput.parentNode.replaceChild(span, dateInput);
                 }
