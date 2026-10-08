@@ -306,6 +306,87 @@
         .voice-status.voice-active { color:#00a040; }
         .listening-indicator { display:none; background:#ff4444; color:white; font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px; animation:blink-pulse 1s infinite; }
         @keyframes blink-pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+        /* ══ BUTTON PARTS (desktop shows icon + long label; mobile shows icon above short label) ══ */
+        .action-buttons .b-ico { display: inline; }
+        .action-buttons .b-m { display: none; }
+        .submit-btn.sheet-submit.is-submitted { background: #555; cursor: not-allowed; }
+
+        /* ══ SAVING OVERLAY — DONE STATE ══ */
+        .saving-box.done .saving-spinner { animation: none; background: #1a9c4a; }
+        .saving-box.done .saving-spinner::before { display: none; }
+        .saving-box.done .saving-spinner-hand { animation: none; color: #fff; font-size: 54px; font-weight: 800; }
+
+        /* ══ PDF READY MODAL ══ */
+        .pdf-ready-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); display: none; align-items: center; justify-content: center; z-index: 100000; padding: 16px; }
+        .pdf-ready-overlay.active { display: flex; }
+        .pdf-ready-box { background: #fff; border-radius: 22px; padding: 26px 22px 22px; width: 100%; max-width: 360px; text-align: center; box-shadow: 0 15px 50px rgba(0,0,0,0.35); }
+        .pdf-ready-title { color: #16a34a; font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+        .pdf-ready-msg { color: #333; font-size: 15px; line-height: 1.4; margin-bottom: 18px; }
+        .pdf-ready-btn { display: block; width: 100%; border: none; border-radius: 14px; padding: 15px 10px; margin-bottom: 10px; font-size: 17px; font-weight: 700; cursor: pointer; font-family: inherit; }
+        .pdf-ready-btn.primary { background: #16a34a; color: #fff; box-shadow: 0 3px 8px rgba(22,163,74,0.35); }
+        .pdf-ready-btn.secondary { background: #efefef; color: #222; letter-spacing: 1px; text-transform: uppercase; font-size: 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+        .pdf-ready-btn:active { transform: translateY(1px); }
+
+        /* ══════════════════════════════════════════════════════════
+           MOBILE ONLY (phones) — nothing below affects desktop.
+           Scoped with body:not(.pdf-capture) so PDF output stays identical.
+           ══════════════════════════════════════════════════════════ */
+        @media (max-width: 768px) {
+            body:not(.pdf-capture) { padding: 8px 8px 78px; }
+            body:not(.pdf-capture) .container { padding: 22px 10px 18px; }
+            body:not(.pdf-capture) .header { margin: -22px -10px 14px; }
+            body:not(.pdf-capture) .header-inner { flex-direction: column; min-height: 0; }
+            body:not(.pdf-capture) .header-logo-box { width: 100%; min-width: 0; padding: 8px 0 2px; border-right: none; background: transparent; }
+            body:not(.pdf-capture) .header-logo-box img { width: 64px; height: 64px; }
+            body:not(.pdf-capture) .header-text { position: static; width: 100%; }
+            body:not(.pdf-capture) .header h1 { font-size: 17px; padding: 10px 8px 2px; }
+            body:not(.pdf-capture) .header .raipur-div-badge { font-size: 11px; letter-spacing: 2px; padding: 3px 8px 9px; }
+            body:not(.pdf-capture) .page-nav { max-width: none; margin: 0 0 8px; gap: 6px; }
+            body:not(.pdf-capture) .page-nav-btn { padding: 9px 6px; font-size: 11.5px; flex: 1; border-radius: 8px; background: #e5e7eb; color: #0b2e4f; border: 1.5px solid #cbd5e1; }
+            body:not(.pdf-capture) .page-nav-btn.active { background: #0b2e4f; color: #fff; border-color: #0b2e4f; }
+            body:not(.pdf-capture) .section-body { padding: 8px 8px 10px; }
+            body:not(.pdf-capture) .section-title { font-size: 12px; padding: 7px 10px; background: #e9ecef; border-bottom: 2px solid #b8bec6; }
+
+            /* ── TEXT AREAS / INPUTS: full width, full text visible (no cut-off) ── */
+            body:not(.pdf-capture) textarea.auto-resize { font-size: 16px; min-height: 38px; padding: 8px 10px; line-height: 1.45; overflow: hidden; word-break: normal; overflow-wrap: anywhere; white-space: pre-wrap; width: 100%; }
+            body:not(.pdf-capture) input[type="text"], body:not(.pdf-capture) input[type="date"], body:not(.pdf-capture) select { font-size: 16px; height: 40px; padding: 4px 8px; }
+            body:not(.pdf-capture) .expandable-line { align-items: flex-start; margin-bottom: 7px; }
+            body:not(.pdf-capture) .line-number { min-width: 24px; padding-top: 9px; }
+            body:not(.pdf-capture) .line-remove-btn { margin-top: 8px; width: 26px; height: 26px; }
+            body:not(.pdf-capture) .lp-grid { grid-template-columns: 1fr; }
+            body:not(.pdf-capture) .lp-grid .form-group { grid-template-columns: 1fr; gap: 3px; padding: 5px 8px 7px; align-items: stretch; }
+            body:not(.pdf-capture) .lp-grid .form-group label { text-align: left; font-weight: 700; color: #0b2e4f; }
+            body:not(.pdf-capture) .lp-grid input[type="text"], body:not(.pdf-capture) .lp-grid input[type="date"], body:not(.pdf-capture) .lp-grid select { height: 40px; }
+            body:not(.pdf-capture) .cli-name-input { width: 100%; height: 46px; font-size: 16px; }
+            body:not(.pdf-capture) .signature-section { flex-direction: column; align-items: stretch; }
+
+            /* ── STATUS MESSAGES become floating toasts above the bottom bar ── */
+            body:not(.pdf-capture) .draft-status.show { position: fixed; left: 10px; right: 10px; bottom: 62px; z-index: 99990; margin: 0; font-size: 14px; font-weight: 700; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+
+            /* ── BOTTOM NAV BAR (fixed) ── */
+            body:not(.pdf-capture) .action-buttons { position: fixed; left: 0; right: 0; bottom: 0; z-index: 9990; margin: 0; padding: 5px 5px calc(5px + env(safe-area-inset-bottom, 0px)); gap: 4px; flex-wrap: nowrap; background: #05070d; box-shadow: 0 -4px 18px rgba(0,0,0,0.4); }
+            body:not(.pdf-capture) .action-buttons .submit-btn,
+            body:not(.pdf-capture) .action-buttons .draft-btn { flex: 1 1 0; min-width: 0; height: 42px; padding: 3px 1px 2px; flex-direction: column; justify-content: center; gap: 1px; border-radius: 9px; background: #131b2a; color: #fff; font-size: 8.5px; font-weight: 800; letter-spacing: 0; line-height: 1; text-align: center; border-bottom: 2px solid #6b7280; box-shadow: 0 1px 3px rgba(0,0,0,0.5); overflow: hidden; -webkit-tap-highlight-color: transparent; }
+            body:not(.pdf-capture) .action-buttons .submit-btn::after,
+            body:not(.pdf-capture) .action-buttons .draft-btn::after { display: none; }
+            body:not(.pdf-capture) .action-buttons .submit-btn:hover,
+            body:not(.pdf-capture) .action-buttons .draft-btn:hover { transform: none; filter: none; background: #131b2a; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+            body:not(.pdf-capture) .action-buttons .submit-btn:active,
+            body:not(.pdf-capture) .action-buttons .draft-btn:active { transform: translateY(1px); filter: brightness(1.25); }
+            body:not(.pdf-capture) .action-buttons .b-ico { font-size: 14px; line-height: 1; display: block; }
+            body:not(.pdf-capture) .action-buttons .b-d { display: none; }
+            body:not(.pdf-capture) .action-buttons .b-m { display: block; white-space: nowrap; }
+            /* order: SAVE DRAFT · UPLOAD DRAFT · SUBMIT · GENERATE PDF · RESET */
+            body:not(.pdf-capture) .action-buttons .draft-btn.download { order: 1; border-bottom-color: #8b5cf6; }
+            body:not(.pdf-capture) .action-buttons .draft-btn.upload   { order: 2; border-bottom-color: #10b981; }
+            body:not(.pdf-capture) .action-buttons .submit-btn.sheet-submit { order: 3; border-bottom-color: #3b82f6; }
+            body:not(.pdf-capture) .action-buttons .submit-btn.pdf-gen-btn  { order: 4; border-bottom-color: #f59e0b; }
+            body:not(.pdf-capture) .action-buttons .draft-btn.reset    { order: 5; border-bottom-color: #ef4444; }
+            body:not(.pdf-capture) .action-buttons .submit-btn.sheet-submit.is-submitted,
+            body:not(.pdf-capture) .action-buttons .submit-btn.sheet-submit:disabled { background: #3f4756; color: #b8c0cc; border-bottom-color: #4b5563; filter: none; opacity: 1; }
+            body:not(.pdf-capture) .autosave-bar { flex-wrap: wrap; }
+        }
     </style>
 </head>
 <body>
@@ -526,18 +607,18 @@
                 <div id="draftStatus" class="draft-status"></div>
                 <div id="sheetStatus" class="draft-status" style="margin-bottom:8px;"></div>
                 <div class="action-buttons">
-                    <button type="submit" class="submit-btn">📄 PDF</button>
+                    <button type="submit" class="submit-btn pdf-gen-btn" id="pdfGenBtn"><span class="b-ico">📄</span><span class="b-d">PDF</span><span class="b-m">GENERATE PDF</span></button>
                     <button type="button" class="draft-btn download no-pdf" onclick="downloadDraft()">
-                        📥 Download Draft
+                        <span class="b-ico">📥</span><span class="b-d">Download Draft</span><span class="b-m">SAVE DRAFT</span>
                     </button>
                     <button type="button" class="draft-btn upload no-pdf" onclick="document.getElementById('draftFileInput').click()">
-                        📤 Upload Draft
+                        <span class="b-ico">📤</span><span class="b-d">Upload Draft</span><span class="b-m">UPLOAD DRAFT</span>
                     </button>
                     <button type="button" class="draft-btn reset no-pdf" onclick="resetForm()">
-                        🔄 Reset
+                        <span class="b-ico">🔄</span><span class="b-d">Reset</span><span class="b-m">RESET</span>
                     </button>
                     <button type="button" class="submit-btn sheet-submit no-pdf" id="saveToSheetBtn" onclick="saveToGoogleSheet()">
-                        ✅ SUBMIT
+                        <span class="b-ico">✅</span><span class="b-d">SUBMIT</span><span class="b-m">SUBMIT</span>
                     </button>
                 </div>
                 <input type="file" id="draftFileInput" class="hidden-file-input" accept=".json" onchange="uploadDraft(event)">
@@ -551,9 +632,20 @@
     <!-- ══ DATA SAVING OVERLAY ══ -->
     <div class="saving-overlay" id="savingOverlay">
         <div class="saving-box">
-            <div class="saving-spinner"><span class="saving-spinner-hand">✋</span></div>
-            <div class="saving-text">⏳ PLEASE WAIT — DATA SAVING...</div>
-            <div class="saving-subtext">Do not close or refresh this page</div>
+            <div class="saving-spinner"><span class="saving-spinner-hand" id="savingHand">✋</span></div>
+            <div class="saving-text" id="savingText">⏳ PLEASE WAIT — DATA SAVING...</div>
+            <div class="saving-subtext" id="savingSub">Do not close or refresh this page</div>
+        </div>
+    </div>
+
+    <!-- ══ PDF READY MODAL (mobile) ══ -->
+    <div class="pdf-ready-overlay no-pdf" id="pdfReadyOverlay">
+        <div class="pdf-ready-box">
+            <div class="pdf-ready-title">📄 PDF ready</div>
+            <div class="pdf-ready-msg">If the download did not start, tap the button below.</div>
+            <button type="button" class="pdf-ready-btn primary" id="pdfDownloadBtn">⬇️ Download PDF</button>
+            <button type="button" class="pdf-ready-btn secondary" id="pdfShareBtn">📤 Share / Save PDF</button>
+            <button type="button" class="pdf-ready-btn secondary" id="pdfCloseBtn">Close</button>
         </div>
     </div>
 
@@ -923,8 +1015,10 @@
             return;
         }
 
-        const submitBtn = e.target.querySelector('.submit-btn'), originalTxt = submitBtn.textContent;
+        const submitBtn = e.target.querySelector('.submit-btn'), originalTxt = submitBtn.innerHTML;
         submitBtn.textContent = 'Generating PDF...'; submitBtn.disabled = true;
+        const _mobilePDF = isMobileView();
+        document.body.classList.add('pdf-capture');   // keeps PDF layout unchanged on mobile
         let swaps = [], lpGridEl = null, origLogoSrc = null;
         const buttons = document.querySelectorAll('.add-line-btn,.line-remove-btn,.submit-btn,.signature-upload,.voice-bar,.no-pdf');
         try {
@@ -1049,13 +1143,17 @@
                 const cliField = document.getElementById('cliName');
                 const cliVal = cliField ? sanitize(cliField.value) : '';
                 const cliStr = cliVal || 'NoCLI';
-                pdf.save('Kavach_Testing_Report_' + dateStr + '_' + locoStr + '_' + cliStr + '.pdf');
+                window._pdfFileName = 'Kavach_Testing_Report_' + dateStr + '_' + locoStr + '_' + cliStr + '.pdf';
+                if (!_mobilePDF) pdf.save(window._pdfFileName);
+                else window._pdfBlob = pdf.output('blob');
             })();
 
             content.classList.remove('pdf-mode');
             buttons.forEach(btn => btn.style.display = '');
-            submitBtn.textContent = originalTxt; submitBtn.disabled = false;
-            alert('\u2705 PDF generated! Sections auto-move to next page if they don\'t fit.');
+            submitBtn.innerHTML = originalTxt; submitBtn.disabled = false;
+            document.body.classList.remove('pdf-capture');
+            if (_mobilePDF) { showPdfReady(); }
+            else alert('\u2705 PDF generated! Sections auto-move to next page if they don\'t fit.');
         } catch (err) {
             console.error(err); alert('Error generating PDF: ' + err.message);
             resetLPRows(lpGridEl);
@@ -1063,7 +1161,9 @@
             if (swaps.length) restoreTextareas(swaps);
             document.getElementById('reportPage').classList.remove('pdf-mode');
             buttons.forEach(btn => btn.style.display = '');
-            submitBtn.textContent = originalTxt; submitBtn.disabled = false;
+            submitBtn.innerHTML = originalTxt; submitBtn.disabled = false;
+            document.body.classList.remove('pdf-capture');
+            hideOverlay();
         }
     });
 
@@ -1313,7 +1413,7 @@
         isDataSubmitted = false;
         const sheetBtn = document.getElementById('saveToSheetBtn');
         sheetBtn.disabled = false;
-        sheetBtn.textContent = '✅ SUBMIT';
+        setSheetBtn('idle');
         sheetBtn.style.background = '';
         sheetBtn.style.cursor = 'pointer';
         document.getElementById('sheetStatus').className = 'draft-status';
@@ -1612,6 +1712,106 @@
             setTimeout(() => el.classList.remove('show'), 3500);
         }
 
+
+
+    /* MOBILE: place REPORT FORM / PHOTO ATTACHMENTS tabs below the heading */
+    (function () {
+        var nav = document.querySelector('.page-nav'), hdr = document.getElementById('reportHeader');
+        if (!nav || !hdr) return;
+        var home = nav.parentNode, homeNext = nav.nextSibling;
+        function place() {
+            if (window.matchMedia('(max-width: 768px)').matches) {
+                if (nav.previousElementSibling !== hdr) hdr.parentNode.insertBefore(nav, hdr.nextSibling);
+            } else if (nav.parentNode !== home) {
+                home.insertBefore(nav, homeNext);
+            }
+        }
+        place();
+        window.addEventListener('resize', place);
+    })();
+
+    /* ═══════ MOBILE HELPERS: overlay, submit-button state, PDF-ready modal, textarea resize ═══════ */
+    function isMobileView() { return window.matchMedia('(max-width: 768px)').matches; }
+
+    function showOverlay(mode, text, sub) {
+        const ov = document.getElementById('savingOverlay');
+        const box = ov.querySelector('.saving-box');
+        document.getElementById('savingText').textContent = text;
+        document.getElementById('savingSub').textContent = sub;
+        document.getElementById('savingHand').textContent = (mode === 'done') ? '✔' : '✋';
+        box.classList.toggle('done', mode === 'done');
+        ov.classList.add('active');
+    }
+    function hideOverlay() {
+        const ov = document.getElementById('savingOverlay');
+        ov.classList.remove('active');
+        ov.querySelector('.saving-box').classList.remove('done');
+        document.getElementById('savingHand').textContent = '✋';
+    }
+
+    function setSheetBtn(state) {
+        const btn = document.getElementById('saveToSheetBtn');
+        if (!btn) return;
+        const T = {
+            idle:      ['✅', 'SUBMIT', 'SUBMIT'],
+            saving:    ['⏳', 'Saving to Google Sheet...', 'SAVING...'],
+            submitted: ['✅', 'SUBMITTED TO GOOGLE SHEET', 'SUBMITTED']
+        }[state];
+        btn.innerHTML = '<span class="b-ico">' + T[0] + '</span><span class="b-d">' + T[1] + '</span><span class="b-m">' + T[2] + '</span>';
+        btn.classList.toggle('is-submitted', state === 'submitted');
+        if (state === 'submitted') { btn.disabled = true; btn.style.cursor = 'not-allowed'; }
+    }
+
+    function showPdfReady() {
+        const blob = window._pdfBlob, name = window._pdfFileName || 'Kavach_Testing_Report.pdf';
+        if (!blob) return;
+        if (window._pdfUrl) URL.revokeObjectURL(window._pdfUrl);
+        window._pdfUrl = URL.createObjectURL(blob);
+        document.getElementById('pdfReadyOverlay').classList.add('active');
+        triggerPdfDownload();   // try to start the download automatically
+    }
+    function triggerPdfDownload() {
+        const a = document.createElement('a');
+        a.href = window._pdfUrl; a.download = window._pdfFileName || 'Kavach_Testing_Report.pdf';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('pdfDownloadBtn').addEventListener('click', triggerPdfDownload);
+        document.getElementById('pdfCloseBtn').addEventListener('click', function () {
+            document.getElementById('pdfReadyOverlay').classList.remove('active');
+        });
+        document.getElementById('pdfShareBtn').addEventListener('click', async function () {
+            const blob = window._pdfBlob, name = window._pdfFileName || 'Kavach_Testing_Report.pdf';
+            if (!blob) return;
+            try {
+                const file = new File([blob], name, { type: 'application/pdf' });
+                if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({ files: [file], title: name });
+                    return;
+                }
+            } catch (err) { if (err && err.name === 'AbortError') return; }
+            // fallback: open PDF in a new tab so it can be saved/shared from the browser
+            try { window.open(window._pdfUrl, '_blank'); } catch (e) { triggerPdfDownload(); }
+        });
+    });
+
+    /* Keep every textarea tall enough to show ALL its text (mobile) */
+    function resizeAllTextareas() {
+        document.querySelectorAll('textarea.auto-resize').forEach(function (ta) {
+            if (ta.offsetParent === null) return;       // hidden — scrollHeight would be 0
+            ta.style.height = 'auto';
+            ta.style.height = Math.max(ta.scrollHeight, 24) + 'px';
+        });
+    }
+    window.addEventListener('load', function () { setTimeout(resizeAllTextareas, 400); });
+    window.addEventListener('resize', resizeAllTextareas);
+    window.addEventListener('orientationchange', function () { setTimeout(resizeAllTextareas, 300); });
+    document.addEventListener('DOMContentLoaded', function () {
+        var fi = document.getElementById('draftFileInput');
+        if (fi) fi.addEventListener('change', function () { [400, 900, 1800].forEach(function (t) { setTimeout(resizeAllTextareas, t); }); });
+        setTimeout(resizeAllTextareas, 700);   // after auto-restored draft
+    });
+
     /* ═══════════════════════════════════════════════
        SAVE TO GOOGLE SHEET
     ═══════════════════════════════════════════════ */
@@ -1636,9 +1836,9 @@
 
         const btn = document.getElementById('saveToSheetBtn');
         btn.disabled = true;
-        btn.textContent = '⏳ Saving to Google Sheet...';
-        const savingOverlay = document.getElementById('savingOverlay');
-        savingOverlay.classList.add('active');
+        setSheetBtn('saving');
+        const _saveStart = Date.now();
+        showOverlay('busy', '⏳ PLEASE WAIT — DATA SAVING...', 'Do not close or refresh this page');
 
         try {
             // Gather all form fields
@@ -1730,12 +1930,15 @@
 
             // no-cors returns opaque response — treat as success if no error thrown
             isDataSubmitted = true;
-            showSheetStatus('✅ Data saved to Google Sheet successfully!', 'success');
-            // Update button to show submitted state
-            btn.textContent = '✅ SUBMITTED TO GOOGLE SHEET';
-            btn.style.background = '#555';
-            btn.style.cursor = 'not-allowed';
-            btn.disabled = true;
+            // keep the animation visible for at least ~1.2s so the user always sees it
+            const _wait = 1200 - (Date.now() - _saveStart);
+            if (_wait > 0) await new Promise(r => setTimeout(r, _wait));
+            // DATA SAVED message inside the overlay, then close
+            showOverlay('done', '✅ DATA SAVED', 'Submitted to Google Sheet successfully');
+            await new Promise(r => setTimeout(r, 1500));
+            hideOverlay();
+            showSheetStatus('✅ DATA SAVED — Submitted to Google Sheet successfully!', 'success');
+            setSheetBtn('submitted');
             return; // skip finally re-enabling
         } catch (err) {
             console.error('Sheet save error:', err);
@@ -1743,9 +1946,9 @@
         } finally {
             if (!isDataSubmitted) {
                 btn.disabled = false;
-                btn.textContent = '✅ SUBMIT';
+                setSheetBtn('idle');
             }
-            savingOverlay.classList.remove('active');
+            hideOverlay();
         }
     }
     </script>
